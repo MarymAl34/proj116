@@ -1,0 +1,91 @@
+<!-- templates/accounts/register.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تسجيل حساب جديد</title>
+    <style>
+        body {
+            background-color: #fce4ec;
+            font-family: 'Arial', sans-serif;
+        }
+        .form-container {
+            width: 400px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #d63384;
+        }
+        h2 {
+            text-align: center;
+            color: #d63384;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        .errorlist {
+            color: red;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #d63384;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>إنشاء حساب جديد</h2>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}:</label>
+            {{ form.username }}
+            {{ form.username.errors }}
+
+            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}:</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+
+            <label for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}:</label>
+            {{ form.phone_number }}
+            {{ form.phone_number.errors }}
+
+            <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}:</label>
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+
+            <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}:</label>
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+
+            <button type="submit">تسجيل</button>
+        </form>
+        <div class="login-link">
+            <p>لديك حساب؟ <a href="{% url 'accounts:login' %}">سجل الدخول</a></p>
+        </div>
+    </div>
+</body>
+</html>

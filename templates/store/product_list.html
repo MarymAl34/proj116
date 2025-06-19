@@ -1,0 +1,82 @@
+<!-- templates/store/product_list.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>قائمة المنتجات</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff0f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #c9184a;
+            margin-bottom: 30px;
+        }
+
+        .product {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(248, 165, 194, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+        }
+
+        .product h3 {
+            margin: 0 0 10px;
+            color: #c9184a;
+        }
+
+        .product p {
+            color: #444;
+            margin: 5px 0;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'header.html' %}  <!-- شريط علوي -->
+
+    <div class="container">
+        <h1>قائمة المنتجات</h1>
+
+        {% for product in products %}
+            <div class="product">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <p class="price">السعر: {{ product.price }} ريال</p>
+            </div>
+        {% empty %}
+            <p style="text-align:center; color: gray;">لا توجد منتجات متاحة حالياً.</p>
+        {% endfor %}
+    </div>
+
+    {% include 'footer.html' %}  <!-- شريط سفلي -->
+
+</body>
+</html>

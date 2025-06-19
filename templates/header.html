@@ -1,0 +1,19 @@
+<!-- templates/header.html -->
+<header style="background-color: #ff4d6d; padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center;">
+    <!-- العنوان والروابط -->
+    <div>
+        <h1 style="margin: 0;">متجر لمسة عناية</h1>
+        <nav>
+            <a href="{% url 'main_home' %}" style="color: white; margin: 0 15px; text-decoration: none;">الرئيسية</a>
+            <a href="{% url 'store:product_list' %}" style="color: white; margin: 0 15px; text-decoration: none;">المنتجات</a>
+            <a href="#" style="color: white; margin: 0 15px; text-decoration: none;">عروضنا</a>
+            <a href="#" style="color: white; margin: 0 15px; text-decoration: none;">تواصل معنا</a>
+        </nav>
+    </div>
+
+    <!-- أزرار الدخول والتسجيل -->
+    <div>
+        <a href="{% url 'accounts:login' %}" style="color: white; margin-left: 15px; text-decoration: none;">تسجيل الدخول</a>
+        <a href="{% url 'accounts:register' %}" style="color: white; text-decoration: none;">إنشاء حساب</a>
+    </div>
+</header>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تسجيل الدخول</title>
+    <style>
+        body {
+            background-color: #fff0f5;
+            font-family: 'Arial', sans-serif;
+        }
+        .form-container {
+            width: 400px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #ff4d6d;
+        }
+        h2 {
+            text-align: center;
+            color: #ff4d6d;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #444;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 10px;
+            color: #666;
+        }
+        .register-link a {
+            color: #ff4d6d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>تسجيل الدخول</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">دخول</button>
+        </form>
+        <div class="register-link">
+            <p>لا تملك حسابًا؟ <a href="{% url 'accounts:register' %}">سجل الآن</a></p>
+        </div>
+    </div>
+</body>
+</html>
