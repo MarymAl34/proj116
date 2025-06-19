@@ -1,4 +1,3 @@
-<!-- templates/accounts/register.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -38,6 +37,20 @@
             margin-top: 5px;
             font-size: 14px;
         }
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 15px;
+        }
+        .messages li {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
         button {
             width: 100%;
             padding: 10px;
@@ -53,11 +66,27 @@
             margin-top: 10px;
             color: #777;
         }
+        .login-link a {
+            color: #d63384;
+            text-decoration: none;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h2>إنشاء حساب جديد</h2>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    {% if message.level_tag == 'success' %}
+                        <li class="alert alert-success">{{ message }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         <form method="POST">
             {% csrf_token %}
             
@@ -83,6 +112,7 @@
 
             <button type="submit">تسجيل</button>
         </form>
+
         <div class="login-link">
             <p>لديك حساب؟ <a href="{% url 'accounts:login' %}">سجل الدخول</a></p>
         </div>

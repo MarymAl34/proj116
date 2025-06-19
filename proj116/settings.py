@@ -1,4 +1,5 @@
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 # المسار الأساسي للمشروع
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +32,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # ✅ لدعم الترجمة
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -46,7 +47,7 @@ ROOT_URLCONF = 'proj116.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # مسار مجلد القوالب العام
+        'DIRS': [BASE_DIR / 'templates'],  # مجلد القوالب العام
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -59,7 +60,7 @@ TEMPLATES = [
     },
 ]
 
-# إعداد تطبيق WSGI
+# تطبيق WSGI
 WSGI_APPLICATION = 'proj116.wsgi.application'
 
 # قاعدة البيانات (SQLite)
@@ -72,29 +73,31 @@ DATABASES = {
 
 # التحقق من كلمات المرور
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # تخصيص نموذج المستخدم
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-# إعدادات اللغة والتوقيت
+# ✅ إعدادات اللغة والتوقيت
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+# ✅ دعم ملفات الترجمة (اختياري إن رغبتِ بملفات po/mo)
+LANGUAGES = [
+    ('ar', _('العربية')),
+    ('en', _('الإنجليزية')),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 # الملفات الثابتة
 STATIC_URL = '/static/'
@@ -102,7 +105,7 @@ STATIC_URL = '/static/'
 # نوع الحقل الافتراضي
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ✅ إعدادات تسجيل الدخول/الخروج
+# ✅ إعدادات تسجيل الدخول والعودة بعده
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
