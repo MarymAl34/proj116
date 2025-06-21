@@ -89,7 +89,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# ✅ دعم ملفات الترجمة (اختياري إن رغبتِ بملفات po/mo)
+# ✅ دعم ملفات الترجمة
 LANGUAGES = [
     ('ar', _('العربية')),
     ('en', _('الإنجليزية')),
@@ -102,6 +102,10 @@ LOCALE_PATHS = [
 # الملفات الثابتة
 STATIC_URL = '/static/'
 
+# ✅ إعدادات الوسائط (مثل صور المنتجات)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # نوع الحقل الافتراضي
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -109,3 +113,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+# ✅ إعدادات ملفات الصور (الوسائط)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
