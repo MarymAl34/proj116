@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from cloudinary.models import CloudinaryField
 
 class Product(models.Model):
     name = models.CharField(
@@ -14,8 +15,8 @@ class Product(models.Model):
         decimal_places=2,
         verbose_name=_("السعر")
     )
-    image = models.ImageField(
-        upload_to='products/',  # يتم حفظ الصور في media/products/
+    image = CloudinaryField(
+        folder='products/',  # يتم رفع الصورة إلى مجلد "products" في Cloudinary
         null=True,
         blank=True,
         verbose_name=_("صورة المنتج")

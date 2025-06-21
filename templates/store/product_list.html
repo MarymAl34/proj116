@@ -22,7 +22,7 @@
                     </p>
                     <p style="font-weight: bold; color: #d63384; font-size: 15px;">السعر: {{ product.price }} ريال</p>
 
-                    <form action="{% url 'store:add_to_cart' product.id %}" method="post" style="margin-top: 12px;">
+                    <form method="post" action="{% url 'store:add_to_cart' product.id %}" style="margin-top: 12px;">
                         {% csrf_token %}
                         <button type="submit"
                             style="background-color: #d63384; color: white; border: none; padding: 10px 20px;
