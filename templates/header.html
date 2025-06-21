@@ -1,19 +1,32 @@
-<!-- templates/header.html -->
-<header style="background-color: #ff4d6d; padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center;">
-    <!-- العنوان والروابط -->
-    <div>
+<header style="background-color: #ff4d6d; padding: 15px; color: white; display: flex; align-items: center; justify-content: space-between; direction: rtl;">
+
+    <!-- ✅ القسم الأيمن: تسجيل الدخول / إنشاء حساب -->
+    <div style="display: flex; gap: 15px;">
+        <a href="{% url 'accounts:login' %}" style="color: white; text-decoration: none;">تسجيل الدخول</a>
+        <a href="{% url 'accounts:register' %}" style="color: white; text-decoration: none;">إنشاء حساب</a>
+    </div>
+
+    <!-- ✅ القسم الأوسط: عنوان المتجر والتنقل -->
+    <div style="text-align: center;">
         <h1 style="margin: 0;">متجر لمسة عناية</h1>
         <nav>
-            <a href="{% url 'main_home' %}" style="color: white; margin: 0 15px; text-decoration: none;">الرئيسية</a>
-            <a href="{% url 'store:product_list' %}" style="color: white; margin: 0 15px; text-decoration: none;">المنتجات</a>
-            <a href="#" style="color: white; margin: 0 15px; text-decoration: none;">عروضنا</a>
-            <a href="#" style="color: white; margin: 0 15px; text-decoration: none;">تواصل معنا</a>
+            <a href="{% url 'main_home' %}" style="color: white; margin: 0 10px; text-decoration: none;">الرئيسية</a>
+            <a href="{% url 'store:product_list' %}" style="color: white; margin: 0 10px; text-decoration: none;">المنتجات</a>
+            <a href="#" style="color: white; margin: 0 10px; text-decoration: none;">عروضنا</a>
+            <a href="#" style="color: white; margin: 0 10px; text-decoration: none;">تواصل معنا</a>
         </nav>
     </div>
 
-    <!-- أزرار الدخول والتسجيل -->
-    <div>
-        <a href="{% url 'accounts:login' %}" style="color: white; margin-left: 15px; text-decoration: none;">تسجيل الدخول</a>
-        <a href="{% url 'accounts:register' %}" style="color: white; text-decoration: none;">إنشاء حساب</a>
+    <!-- ✅ القسم الأيسر: زر السلة -->
+    <div style="position: relative;">
+        <a href="{% url 'store:cart' %}" style="color: white; font-size: 18px; text-decoration: none; position: relative;">
+            🛒 السلة
+            {% if request.session.cart %}
+                <span style="position: absolute; top: -10px; left: -15px; background: white; color: #d63384; border-radius: 50%; padding: 2px 6px; font-size: 12px; font-weight: bold;">
+                    {{ request.session.cart|length }}
+                </span>
+            {% endif %}
+        </a>
     </div>
+
 </header>

@@ -4,7 +4,7 @@
     {% if products %}
         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; margin: 0 auto;">
             {% for product in products %}
-                <div style="background: #fff; border-radius: 12px; padding: 15px; width: 280px; box-shadow: 0 0 10px rgba(248, 165, 194, 0.3); transition: 0.3s; text-align: center;">
+                <div style="background: #fff; border-radius: 12px; padding: 15px; width: 280px; box-shadow: 0 4px 10px rgba(248, 165, 194, 0.3); transition: 0.3s; text-align: center;">
                     
                     {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}"
@@ -20,7 +20,16 @@
                     <p style="color: #555; font-size: 14px; margin-bottom: 10px;">
                         {{ product.description|truncatechars:100 }}
                     </p>
-                    <p style="font-weight: bold; color: #d63384;">السعر: {{ product.price }} ريال</p>
+                    <p style="font-weight: bold; color: #d63384; font-size: 15px;">السعر: {{ product.price }} ريال</p>
+
+                    <form action="{% url 'store:add_to_cart' product.id %}" method="post" style="margin-top: 12px;">
+                        {% csrf_token %}
+                        <button type="submit"
+                            style="background-color: #d63384; color: white; border: none; padding: 10px 20px;
+                                   border-radius: 6px; cursor: pointer; font-size: 14px;">
+                            🛒 أضف إلى السلة
+                        </button>
+                    </form>
                 </div>
             {% endfor %}
         </div>
