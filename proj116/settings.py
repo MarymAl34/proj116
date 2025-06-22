@@ -1,17 +1,23 @@
+import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 import cloudinary
+from dotenv import load_dotenv
+
+# تحميل متغيرات البيئة من ملف .env
+load_dotenv()
 
 # المسار الأساسي للمشروع
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # مفتاح الأمان
-SECRET_KEY = 'django-insecure-i999%anm4i4-5*%1ead2vx#3kfa-igo86t+5_(20-m*pz(p5jh'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-default-key')
 
 # وضع التصحيح
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# المضيفون المسموح بهم
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',') if not DEBUG else []
 
 # التطبيقات المثبتة
 INSTALLED_APPS = [
@@ -68,12 +74,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'proj116.wsgi.application'
 
 # قاعدة البيانات
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.getenv('DJANGO_ENV') == 'production':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'HOST': os.getenv('DB_HOST', 'localhost'),
+            'PORT': os.getenv('DB_PORT', '5432'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # التحقق من كلمات المرور
 AUTH_PASSWORD_VALIDATORS = [
@@ -107,17 +125,17 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # إعداد Cloudinary
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dwuqinjmj',
-    'API_KEY': '873348181376647',
-    'API_SECRET': 'J9w5pKFEMc5v1No61bmchMWG0v0',
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 cloudinary.config(
-    cloud_name='dwuqinmjg',
-    api_key='615189195894851',
-    api_secret='4yCAOOQfPQ4tMQNQ7hCma-7SKg0',
+    cloud_name=os.getenv('CLOUDINARY_CONFIG_NAME', os.getenv('CLOUDINARY_CLOUD_NAME')),
+    api_key=os.getenv('CLOUDINARY_CONFIG_KEY', os.getenv('CLOUDINARY_API_KEY')),
+    api_secret=os.getenv('CLOUDINARY_CONFIG_SECRET', os.getenv('CLOUDINARY_API_SECRET')),
     secure=True
 )
 
