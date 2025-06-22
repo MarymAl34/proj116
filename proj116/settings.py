@@ -4,47 +4,37 @@ from django.utils.translation import gettext_lazy as _
 import cloudinary
 from dotenv import load_dotenv
 
-# تحميل متغيرات البيئة من ملف .env
+# تحميل متغيرات البيئة
 load_dotenv()
 
-# ==============================
-# 📁 المسار الأساسي للمشروع
-# ==============================
+# المسار الأساسي للمشروع
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ==============================
-# 🔐 إعدادات الأمان
-# ==============================
+# الأمان
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-default-key')
 DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
-# ALLOWED_HOSTS يقرأ مباشرة من .env
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
-
-# ==============================
-# 📦 التطبيقات
-# ==============================
+# التطبيقات المثبتة
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',  # ← هذا مهم جداً للملفات الثابتة
 
-    # تطبيقات الطرف الثالث
+    # الطرف الثالث
     'cloudinary',
     'cloudinary_storage',
 
-    # تطبيقات المشروع
+    # التطبيقات الخاصة بك
     'accounts',
     'store',
     'payments',
 ]
 
-# ==============================
-# ⚙️ الوسطاء
-# ==============================
+# الوسطاء
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,14 +46,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ==============================
-# 🔗 الراوت
-# ==============================
 ROOT_URLCONF = 'proj116.urls'
 
-# ==============================
-# 🎨 القوالب
-# ==============================
+# القوالب
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -80,14 +65,9 @@ TEMPLATES = [
     },
 ]
 
-# ==============================
-# 🧵 WSGI
-# ==============================
 WSGI_APPLICATION = 'proj116.wsgi.application'
 
-# ==============================
-# 🗃️ قاعدة البيانات
-# ==============================
+# قاعدة البيانات
 if os.getenv('DJANGO_ENV') == 'production':
     DATABASES = {
         'default': {
@@ -107,9 +87,7 @@ else:
         }
     }
 
-# ==============================
-# 🔐 تحقق من كلمات المرور
-# ==============================
+# التحقق من كلمات المرور
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -117,14 +95,10 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# ==============================
-# 👤 المستخدم المخصص
-# ==============================
+# نموذج المستخدم
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-# ==============================
-# 🌍 اللغة والوقت
-# ==============================
+# اللغة والوقت
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
@@ -138,22 +112,21 @@ LANGUAGES = [
 
 LOCALE_PATHS = [BASE_DIR / 'locale']
 
-# ==============================
-# 📂 الملفات الثابتة
-# ==============================
+# الملفات الثابتة
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ==============================
-# ☁️ Cloudinary
-# ==============================
+# إعدادات media (اختياري - Cloudinary يستخدم بدلاً منها)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Cloudinary
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
     'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
 }
-
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 cloudinary.config(
@@ -163,9 +136,7 @@ cloudinary.config(
     secure=True
 )
 
-# ==============================
-# ⚙️ إعدادات أخرى
-# ==============================
+# الحقل الافتراضي
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # تسجيل الدخول والخروج
