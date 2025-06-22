@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 # تحميل متغيرات البيئة
 load_dotenv()
 
-# المسار الأساسي للمشروع
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # الأمان
@@ -15,20 +14,20 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-default-key')
 DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
-# التطبيقات المثبتة
+# التطبيقات
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',  # ← هذا مهم جداً للملفات الثابتة
+    'django.contrib.staticfiles',
 
-    # الطرف الثالث
+    # طرف ثالث
     'cloudinary',
     'cloudinary_storage',
 
-    # التطبيقات الخاصة بك
+    # تطبيقات المشروع
     'accounts',
     'store',
     'payments',
@@ -37,6 +36,7 @@ INSTALLED_APPS = [
 # الوسطاء
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ← مهم جداً لتخديم static
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -87,7 +87,7 @@ else:
         }
     }
 
-# التحقق من كلمات المرور
+# تحقق من كلمات المرور
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -95,7 +95,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# نموذج المستخدم
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # اللغة والوقت
@@ -116,8 +115,9 @@ LOCALE_PATHS = [BASE_DIR / 'locale']
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # ← مهم لـ Render
 
-# إعدادات media (اختياري - Cloudinary يستخدم بدلاً منها)
+# media (غير مستخدم عند Cloudinary لكن يبقى افتراضياً)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -136,10 +136,8 @@ cloudinary.config(
     secure=True
 )
 
-# الحقل الافتراضي
+# إعدادات إضافية
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# تسجيل الدخول والخروج
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
