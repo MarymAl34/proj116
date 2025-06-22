@@ -7,19 +7,23 @@ from dotenv import load_dotenv
 # تحميل متغيرات البيئة من ملف .env
 load_dotenv()
 
-# المسار الأساسي للمشروع
+# ==============================
+# 📁 المسار الأساسي للمشروع
+# ==============================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# مفتاح الأمان
+# ==============================
+# 🔐 إعدادات الأمان
+# ==============================
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-default-key')
-
-# وضع التصحيح
 DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
-# المضيفون المسموح بهم
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',') if not DEBUG else []
+# ALLOWED_HOSTS يقرأ مباشرة من .env
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
 
-# التطبيقات المثبتة
+# ==============================
+# 📦 التطبيقات
+# ==============================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,7 +42,9 @@ INSTALLED_APPS = [
     'payments',
 ]
 
-# الوسطاء
+# ==============================
+# ⚙️ الوسطاء
+# ==============================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,10 +56,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# إعدادات الراوت
+# ==============================
+# 🔗 الراوت
+# ==============================
 ROOT_URLCONF = 'proj116.urls'
 
-# إعدادات القوالب
+# ==============================
+# 🎨 القوالب
+# ==============================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -70,10 +80,14 @@ TEMPLATES = [
     },
 ]
 
-# إعدادات WSGI
+# ==============================
+# 🧵 WSGI
+# ==============================
 WSGI_APPLICATION = 'proj116.wsgi.application'
 
-# قاعدة البيانات
+# ==============================
+# 🗃️ قاعدة البيانات
+# ==============================
 if os.getenv('DJANGO_ENV') == 'production':
     DATABASES = {
         'default': {
@@ -93,7 +107,9 @@ else:
         }
     }
 
-# التحقق من كلمات المرور
+# ==============================
+# 🔐 تحقق من كلمات المرور
+# ==============================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -101,10 +117,14 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# نموذج المستخدم المخصص
+# ==============================
+# 👤 المستخدم المخصص
+# ==============================
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-# اللغة والوقت
+# ==============================
+# 🌍 اللغة والوقت
+# ==============================
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
@@ -118,12 +138,16 @@ LANGUAGES = [
 
 LOCALE_PATHS = [BASE_DIR / 'locale']
 
-# إعدادات الملفات الثابتة
+# ==============================
+# 📂 الملفات الثابتة
+# ==============================
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# إعداد Cloudinary
+# ==============================
+# ☁️ Cloudinary
+# ==============================
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
@@ -139,10 +163,12 @@ cloudinary.config(
     secure=True
 )
 
-# نوع الحقول الافتراضي
+# ==============================
+# ⚙️ إعدادات أخرى
+# ==============================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# إعدادات تسجيل الدخول والخروج
+# تسجيل الدخول والخروج
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
